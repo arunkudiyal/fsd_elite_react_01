@@ -1,9 +1,29 @@
 import { Component } from "react";
-import Paragraph from './components/Paragraph'
-import Button from "./components/Button";
+import Person from "./components/Person";
 
 class App extends Component {
-  // JavaScript
+  // State -> A Way to create & manage your own data within the comp.
+  // State is just a normal JS OBJECT
+  state = {
+    persons: [
+      { name: 'Johnnathan', age: '30' },
+      { name: 'Daniel', age: '27' },
+      { name: 'Tony', age: '32 ' }
+    ],
+    someOtherStateValue: 'This is an another state value'
+  }
+
+  switchNameHandler = () => {
+    // this.state.persons[0].name = 'John' -> DONOT DO THIS (directly)
+    this.setState({
+      persons: [
+        { name: 'John', age: '30' },
+        { name: 'Daniel', age: '27' },
+        { name: 'Tony Kakkar', age: '32 ' }
+      ]
+    })
+  }
+
   render() {
     return (
       <div>
@@ -11,14 +31,11 @@ class App extends Component {
           <h1 className="page-header">Person Management</h1>
         </div>
         <div className="container">
-          <Paragraph text='Paragraph - 1' color='red' props1={1} />
-          <Paragraph text='Paragraph - 2' color='blue' />
-          <Paragraph color='green' />
-          <Paragraph color='orange' text='Paragraph - 3'>This is a Paragraph Componenet</Paragraph>
-          <Button text='Click Me' contextualClass='success' />
-          <Button />
+          <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
+          <Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
+          <Person name={this.state.persons[2].name} age={this.state.persons[2].age} /> <hr />
+          <button onClick={this.switchNameHandler} className='btn btn-primary'>Switch Name</button>
         </div>
-        <div></div>
       </div>
     )
   }
