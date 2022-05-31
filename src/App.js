@@ -8,7 +8,8 @@ class App extends Component {
     persons: [
       { name: 'Johnnathan', age: '30' },
       { name: 'Daniel', age: '27' },
-      { name: 'Tony', age: '32 ' }
+      { name: 'Tony', age: '32' },
+      { name: 'Max', age: '25' }
     ],
     someOtherStateValue: 'This is an another state value',
     showPersons: false
@@ -31,21 +32,38 @@ class App extends Component {
   }
 
   render() {
+    // JavaScript
+    let persons = (
+      <small>The content will be displayed once the button is clicked...</small>
+    )
+    // let persons = null
+    if (this.state.showPersons) {
+      // persons variable is now a JSX - ()
+      persons = (
+        <div className="container">
+          {this.state.persons.map((person, index) => {
+            return (
+              <Person
+                key={index}
+                name={person.name}
+                age={person.age} />
+            )
+          })}
+          <button onClick={this.switchNameHandler} className='btn btn-primary'>Switch Name</button>
+        </div>
+      )
+    }
+
     return (
       <div>
         <div className="container-fluid">
-          <h1 className="page-header">Person Management</h1> <hr />
+          <h1 className="page-header">Person Management</h1>
           <button onClick={this.togglePersonHandler} className='btn btn-warning'>Toggle Persons</button> <hr />
         </div>
-        {this.state.showPersons ?
-          <div className="container">
-            <Person name={this.state.persons[0].name} age={this.state.persons[0].age} />
-            <Person name={this.state.persons[1].name} age={this.state.persons[1].age} />
-            <Person name={this.state.persons[2].name} age={this.state.persons[2].age} /> <hr />
-            <button onClick={this.switchNameHandler} className='btn btn-primary'>Switch Name</button>
-          </div> : null
-        }
-
+        <div className="container">
+          {persons}
+        </div>
+        {/* { this.state.showPersons ? JSX : null } */}
       </div>
     )
   }

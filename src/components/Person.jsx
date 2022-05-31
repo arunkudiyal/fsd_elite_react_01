@@ -8,7 +8,10 @@ const Person = (props) => {
     // }
     return (
         // <p id='my-para' style={paraStyles}>Hello, I am {props.name} & I am {props.age} years old.</p>
-        <p id='my-para'>Hello, I am {props.name} & I am {props.age} years old.</p>
+        <div>
+            <p id='my-para'>Hello, I am {props.name} & I am {props.age} years old.</p>
+            <input className='form-control' type="text" placeholder='Enter a new name...' /> <hr />
+        </div>
     )
 }
 
