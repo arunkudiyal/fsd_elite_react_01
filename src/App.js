@@ -2,17 +2,33 @@ import { Component } from "react";
 import Person from "./components/Person";
 
 class App extends Component {
-  // State -> A Way to create & manage your own data within the comp.
-  // State is just a normal JS OBJECT
-  state = {
-    persons: [
-      { name: 'Johnnathan', age: '30' },
-      { name: 'Daniel', age: '27' },
-      { name: 'Tony', age: '32' },
-      { name: 'Max', age: '25' }
-    ],
-    someOtherStateValue: 'This is an another state value',
-    showPersons: false
+  constructor(props) {
+    console.log(`[App.js] contructor`)
+    super()
+    // State -> A Way to create & manage your own data within the comp.
+    // State is just a normal JS OBJECT
+    this.state = {
+      persons: [
+        { id: 'Person-One', name: 'Johnnathan', age: '30' },
+        { id: 'Person-Two', name: 'Daniel', age: '27' },
+        { id: 'Person-Three', name: 'Tony', age: '32' },
+        { id: 'Person-Four', name: 'Max', age: '25' }
+      ],
+      someOtherStateValue: 'This is an another state value',
+      showPersons: false
+    }
+  }
+
+  static getDerivedStateFromProps = (props, state) => {
+    console.log(`[App.js] getDeriveredStateFromProps`)
+    console.log(props)
+    console.log(state)
+    return state
+  }
+
+  componentDidMount = () => {
+    // cause side-effect
+    console.log(`[App.js] componentDidMount`)
   }
 
   switchNameHandler = () => {
@@ -31,7 +47,26 @@ class App extends Component {
     this.setState({ showPersons: !currentShowValue })
   }
 
+  deletePersonHandler = (personIndex) => {
+    // If I remove one object from the persons list
+
+    // copy of the state persons
+    const personCopy = [...this.state.persons]
+    personCopy.splice(personIndex, 1)
+    this.setState({ persons: personCopy })
+  }
+
+  nameChangedHandler = (event, personId) => {
+    const index = this.state.persons.findIndex(p => p.id === personId)
+    const person = { ...this.state.persons[index] }
+    person.name = event.target.value
+    const personsCopy = [...this.state.persons]
+    personsCopy[index] = person
+    this.setState({ persons: personsCopy })
+  }
+
   render() {
+    console.log(`[App.js] render`)
     // JavaScript
     let persons = (
       <small>The content will be displayed once the button is clicked...</small>
@@ -40,13 +75,15 @@ class App extends Component {
     if (this.state.showPersons) {
       // persons variable is now a JSX - ()
       persons = (
-        <div className="container">
+        <div className="container" >
           {this.state.persons.map((person, index) => {
             return (
               <Person
-                key={index}
+                key={person.id}
                 name={person.name}
-                age={person.age} />
+                age={person.age}
+                deleted={() => this.deletePersonHandler(index)}
+                changed={(event) => this.nameChangedHandler(event, person.id)} />
             )
           })}
           <button onClick={this.switchNameHandler} className='btn btn-primary'>Switch Name</button>
@@ -57,7 +94,7 @@ class App extends Component {
     return (
       <div>
         <div className="container-fluid">
-          <h1 className="page-header">Person Management</h1>
+          <h1 className="page-header">{this.props.appTitle}</h1>
           <button onClick={this.togglePersonHandler} className='btn btn-warning'>Toggle Persons</button> <hr />
         </div>
         <div className="container">
