@@ -2,33 +2,34 @@ import { Component } from "react";
 import Person from "./components/Person";
 
 class App extends Component {
+  // State -> A Way to create & manage your own data within the comp.
+  // State is just a normal JS OBJECT
   constructor(props) {
-    console.log(`[App.js] contructor`)
-    super()
-    // State -> A Way to create & manage your own data within the comp.
-    // State is just a normal JS OBJECT
+    super(props)
+    console.log(`[App.js] constructor()`)
     this.state = {
       persons: [
         { id: 'Person-One', name: 'Johnnathan', age: '30' },
         { id: 'Person-Two', name: 'Daniel', age: '27' },
         { id: 'Person-Three', name: 'Tony', age: '32' },
-        { id: 'Person-Four', name: 'Max', age: '25' }
+        { id: 'Person-Four', name: 'Max', age: '25' },
+        { id: 'Person-Five', name: 'Ted', age: '31' }
       ],
       someOtherStateValue: 'This is an another state value',
       showPersons: false
     }
   }
 
-  static getDerivedStateFromProps = (props, state) => {
-    console.log(`[App.js] getDeriveredStateFromProps`)
+  static getDerivedStateFromProps(props, state) {
+    console.log(`[App.js] getDerivedStateFromProps`)
     console.log(props)
     console.log(state)
-    return state
+    return state;
   }
 
-  componentDidMount = () => {
-    // cause side-effect
-    console.log(`[App.js] componentDidMount`)
+  componentDidMount() {
+    // API calls / DB Connections / Side-Effects
+    console.log(`[App.js] componentDidMount()`)
   }
 
   switchNameHandler = () => {
@@ -66,7 +67,7 @@ class App extends Component {
   }
 
   render() {
-    console.log(`[App.js] render`)
+    console.log(`[App.js] render()`)
     // JavaScript
     let persons = (
       <small>The content will be displayed once the button is clicked...</small>
@@ -76,16 +77,18 @@ class App extends Component {
       // persons variable is now a JSX - ()
       persons = (
         <div className="container" >
-          {this.state.persons.map((person, index) => {
-            return (
-              <Person
-                key={person.id}
-                name={person.name}
-                age={person.age}
-                deleted={() => this.deletePersonHandler(index)}
-                changed={(event) => this.nameChangedHandler(event, person.id)} />
-            )
-          })}
+          {
+            this.state.persons.map((person, index) => {
+              return (
+                <Person
+                  key={person.id}
+                  name={person.name}
+                  age={person.age}
+                  deleted={() => this.deletePersonHandler(index)}
+                  changed={(event) => this.nameChangedHandler(event, person.id)} />
+              )
+            })
+          }
           <button onClick={this.switchNameHandler} className='btn btn-primary'>Switch Name</button>
         </div>
       )
