@@ -1,5 +1,7 @@
 import { Component } from "react";
-import Person from "./components/Person";
+import Person from "./components/Person/Person";
+
+import Aux from "./components/HOC/Aux";
 
 class App extends Component {
   // State -> A Way to create & manage your own data within the comp.
@@ -95,7 +97,7 @@ class App extends Component {
     }
 
     return (
-      <div>
+      <Aux>
         <div className="container-fluid">
           <h1 className="page-header">{this.props.appTitle}</h1>
           <button onClick={this.togglePersonHandler} className='btn btn-warning'>Toggle Persons</button> <hr />
@@ -104,7 +106,7 @@ class App extends Component {
           {persons}
         </div>
         {/* { this.state.showPersons ? JSX : null } */}
-      </div>
+      </Aux>
     )
   }
 }

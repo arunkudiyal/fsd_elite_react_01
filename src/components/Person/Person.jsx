@@ -1,10 +1,12 @@
-import { Component } from 'react'
+import { PureComponent } from 'react'
 import './Person.css'
 
-class Person extends Component {
+class Person extends PureComponent {
     constructor(props) {
         super(props)
-        this.state = {}
+        this.state = {
+            sampleState: 'This is a Sample State'
+        }
     }
 
     static getDerivedStateFromProps(props, state) {
@@ -12,12 +14,13 @@ class Person extends Component {
         return state
     }
 
-    shouldComponentUpdate(newProps, newState) {
-        console.log(`[Person.js] shouldComponentUpdate()`)
-        console.log(newProps)
-        console.log(newState)
-        return true 
-    }
+    // shouldComponentUpdate(newProps, newState) {
+    //     if(this.props.name !== newProps.name || this.props.name !== newProps.name || this.props.name !== newProps.name || this.props.name !== newProps.name) {
+    //         return true
+    //     } else {
+    //         return false
+    //     }
+    // }
 
     getSnapshotBeforeUpdate() {
         console.log(`[Person.js] getSnapshotBeforeUpdate()`)
@@ -26,6 +29,10 @@ class Person extends Component {
 
     componentDidUpdate() {
         console.log(`[Person.js] componentDidUpdate()`)
+    }
+
+    checkInfo = () => {
+        this.setState({sampleState: 'Updated Sample State'})
     }
 
     render() {
@@ -37,6 +44,7 @@ class Person extends Component {
                 <div style={{ display: 'flex' }}>
                     <input onChange={this.props.changed} className='form-control' type="text" placeholder='Enter a new name...' /> <hr />
                     <button onClick={this.props.deleted} className='btn btn-danger'>Delete</button>
+                    <button onClick={this.checkInfo} className='btn btn-info'>Check...</button>
                 </div>
             </div>
         )
