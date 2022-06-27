@@ -38,9 +38,9 @@ class App extends Component {
     // this.state.persons[0].name = 'John' -> DONOT DO THIS (directly)
     this.setState({
       persons: [
-        { name: 'John', age: '30' },
-        { name: 'Daniel', age: '27' },
-        { name: 'Tony Kakkar', age: '32 ' }
+        { id:'Person - One', name: 'John', age: '30' },
+        { id:'Person - Two', name: 'Daniel', age: '27' },
+        { id:'Person - Three', name: 'Tony Kakkar', age: '32 ' }
       ]
     })
   }
@@ -71,13 +71,13 @@ class App extends Component {
   render() {
     console.log(`[App.js] render()`)
     // JavaScript
-    let persons = (
-      <small>The content will be displayed once the button is clicked...</small>
-    )
+    // let persons = (
+    //   <small>The content will be displayed once the button is clicked...</small>
+    // )
     // let persons = null
-    if (this.state.showPersons) {
+    // if (this.state.showPersons) {
       // persons variable is now a JSX - ()
-      persons = (
+      let persons = (
         <div className="container" >
           {
             this.state.persons.map((person, index) => {
@@ -94,7 +94,7 @@ class App extends Component {
           <button onClick={this.switchNameHandler} className='btn btn-primary'>Switch Name</button>
         </div>
       )
-    }
+    // }
 
     return (
       <Aux>
